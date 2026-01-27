@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 RabbitMQ consumer service that manages qBittorrent downloads via the qBittorrent Web API. Listens for `downloads.add` messages to add torrents, then broadcasts download progress at regular intervals and emits completion/status events. Part of the [Consumers](../PRODUCT-CANVAS.md) event-driven microservices platform.
 
-Uses [`consumer-shared`](../consumer-shared/) for RabbitMQ connection management, base consumer/publisher abstractions, DLQ retry logic, logging, and common error classes.
+Uses [`@xmer/consumer-shared`](../consumer-shared/) for RabbitMQ connection management, base consumer/publisher abstractions, DLQ retry logic, logging, and common error classes.
 
 ## Commands
 
@@ -48,11 +48,11 @@ downloads.add ─────────▶│  qBittorrent         │──�
 
 - **`src/index.ts`**: Service orchestration. Wires together all dependencies (shared and service-specific), starts the consumer, and registers graceful shutdown handlers (SIGTERM/SIGINT).
 
-- **`src/consumer/download-consumer.ts`**: Extends `BaseConsumer` from `consumer-shared`. Implements `processMessage()` to handle `downloads.add` messages — delegates to the qBittorrent client to add torrents, then stores the torrent hash in the state manager. Message acknowledgment and DLQ routing are handled by the base class.
+- **`src/consumer/download-consumer.ts`**: Extends `BaseConsumer` from `@xmer/consumer-shared`. Implements `processMessage()` to handle `downloads.add` messages — delegates to the qBittorrent client to add torrents, then stores the torrent hash in the state manager. Message acknowledgment and DLQ routing are handled by the base class.
 
 - **`src/client/qbittorrent-client.ts`**: Wraps the qBittorrent Web API. Handles authentication, adding torrents (magnet links), and querying torrent status/progress. Implements `IQBittorrentClient`.
 
-- **`src/publisher/progress-publisher.ts`**: Extends `BasePublisher` from `consumer-shared`. Runs on a configurable interval, polls qBittorrent for tracked download status, and publishes messages to the appropriate routing key. Emits `downloads.complete` when a torrent reaches 100% download progress. Reports `downloads.stalled` and `downloads.paused` states but continues polling until the torrent is deleted from qBittorrent or reaches 100%.
+- **`src/publisher/progress-publisher.ts`**: Extends `BasePublisher` from `@xmer/consumer-shared`. Runs on a configurable interval, polls qBittorrent for tracked download status, and publishes messages to the appropriate routing key. Emits `downloads.complete` when a torrent reaches 100% download progress. Reports `downloads.stalled` and `downloads.paused` states but continues polling until the torrent is deleted from qBittorrent or reaches 100%.
 
 - **`src/state/state-manager.ts`**: Redis-backed state persistence. Stores the set of tracked torrent hashes so the service can resume polling after restart without losing track of in-progress downloads. Implements `IStateManager`.
 
@@ -60,14 +60,14 @@ downloads.add ─────────▶│  qBittorrent         │──�
 
 ### Dependency Injection Pattern
 
-Components receive dependencies via constructor options. Shared infrastructure is imported from `consumer-shared`:
+Components receive dependencies via constructor options. Shared infrastructure is imported from `@xmer/consumer-shared`:
 
 ```typescript
 import {
   ConnectionManager,
   DlqHandler,
   createLogger,
-} from "consumer-shared";
+} from "@xmer/consumer-shared";
 
 const consumer = new DownloadConsumer({
   connectionManager,  // ConnectionManager (from consumer-shared)
@@ -84,7 +84,7 @@ const consumer = new DownloadConsumer({
 Service-specific errors in `src/errors/`:
 - `QBittorrentError`: qBittorrent API failures (includes HTTP status, endpoint)
 
-Base error classes (`RetryableError`, `NonRetryableError`, `ConnectionError`, `ConfigurationError`) are imported from `consumer-shared`.
+Base error classes (`RetryableError`, `NonRetryableError`, `ConnectionError`, `ConfigurationError`) are imported from `@xmer/consumer-shared`.
 
 ## RabbitMQ Topology
 
@@ -119,7 +119,7 @@ Set to `1`. Each message triggers a qBittorrent API call (add torrent), so seque
 
 ### Dead Letter Queue (DLQ)
 
-Uses `DlqHandler` from `consumer-shared` with the platform DLQ standard:
+Uses `DlqHandler` from `@xmer/consumer-shared` with the platform DLQ standard:
 
 - **DLQ queue**: `downloads.add.dlq`
 - **Delayed exchange**: `qbittorrent.delay`
@@ -226,7 +226,7 @@ Uses Bun's built-in test runner. Tests use the arrange-act-assert pattern.
 Mocking pattern for shared dependencies:
 ```typescript
 import { describe, it, expect, mock } from "bun:test";
-import type { ILogger } from "consumer-shared";
+import type { ILogger } from "@xmer/consumer-shared";
 
 const mockLogger: ILogger = {
   debug: mock(() => {}),
@@ -237,18 +237,18 @@ const mockLogger: ILogger = {
 };
 ```
 
-The qBittorrent Web API client, Redis client, and all `consumer-shared` components must be fully mocked in tests -- no real HTTP calls, Redis connections, or RabbitMQ connections.
+The qBittorrent Web API client, Redis client, and all `@xmer/consumer-shared` components must be fully mocked in tests -- no real HTTP calls, Redis connections, or RabbitMQ connections.
 
 ## TypeScript
 
 - ESM modules with `.js` extensions in imports
 - Strict mode enabled with `noUncheckedIndexedAccess`
 - Service-specific interfaces in `src/types/index.ts`
-- Shared interfaces imported from `consumer-shared`
+- Shared interfaces imported from `@xmer/consumer-shared`
 
 ## Dependencies
 
-### Shared (from `consumer-shared`)
+### Shared (from `@xmer/consumer-shared`)
 - `ConnectionManager` -- RabbitMQ connection lifecycle
 - `BaseConsumer` -- message consumption, ack/nack, DLQ routing
 - `BasePublisher` -- exchange publishing

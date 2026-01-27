@@ -3,19 +3,15 @@ FROM oven/bun:1 AS builder
 
 WORKDIR /app
 
-# Copy consumer-shared first for dependency resolution
-COPY consumer-shared/ ./consumer-shared/
-
-# Copy service package files
-COPY qbittorrent-consumer/package.json qbittorrent-consumer/bun.lock* ./qbittorrent-consumer/
+# Copy package files
+COPY package.json bun.lock* ./
 
 # Install dependencies
-WORKDIR /app/qbittorrent-consumer
 RUN bun install --frozen-lockfile || bun install
 
 # Copy source code
-COPY qbittorrent-consumer/tsconfig.json ./
-COPY qbittorrent-consumer/src/ ./src/
+COPY tsconfig.json ./
+COPY src/ ./src/
 
 # Build TypeScript
 RUN bun run build
@@ -29,16 +25,12 @@ WORKDIR /app
 RUN addgroup --gid 1001 --system nodejs && \
     adduser --system --uid 1001 nodejs
 
-# Copy consumer-shared (needed at runtime for file: dependency)
-COPY consumer-shared/ ./consumer-shared/
-
 # Copy package files and install production deps
-COPY qbittorrent-consumer/package.json ./qbittorrent-consumer/
-WORKDIR /app/qbittorrent-consumer
+COPY package.json ./
 RUN bun install --production
 
 # Copy built artifacts
-COPY --from=builder /app/qbittorrent-consumer/dist ./dist
+COPY --from=builder /app/dist ./dist
 
 ENV NODE_ENV=production
 

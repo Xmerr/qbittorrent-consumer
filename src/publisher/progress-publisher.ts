@@ -1,5 +1,5 @@
-import { BasePublisher } from "consumer-shared";
-import type { ILogger, IPublisher } from "consumer-shared";
+import { BasePublisher } from "@xmer/consumer-shared";
+import type { ILogger, IPublisher } from "@xmer/consumer-shared";
 import type {
 	IProgressPublisher,
 	IQBittorrentClient,

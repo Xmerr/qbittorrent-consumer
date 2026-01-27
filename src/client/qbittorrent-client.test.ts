@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
-import { NonRetryableError, RetryableError } from "consumer-shared";
-import type { ILogger } from "consumer-shared";
+import { NonRetryableError, RetryableError } from "@xmer/consumer-shared";
+import type { ILogger } from "@xmer/consumer-shared";
 import { QBittorrentError } from "../errors/index.js";
 import { QBittorrentClient, extractHash } from "./qbittorrent-client.js";
 

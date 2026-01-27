@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, mock } from "bun:test";
+import type { IDlqHandler, ILogger } from "@xmer/consumer-shared";
 import type { Channel, ConsumeMessage } from "amqplib";
-import type { IDlqHandler, ILogger } from "consumer-shared";
 import type { IQBittorrentClient, IStateManager } from "../types/index.js";
 import { DownloadConsumer } from "./download-consumer.js";
 

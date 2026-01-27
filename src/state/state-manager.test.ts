@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, mock } from "bun:test";
-import type { ILogger } from "consumer-shared";
+import type { ILogger } from "@xmer/consumer-shared";
 import type { QBittorrentTorrentInfo } from "../types/index.js";
 import { StateManager } from "./state-manager.js";
 

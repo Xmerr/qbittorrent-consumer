@@ -1,4 +1,4 @@
-import { ConfigurationError } from "consumer-shared";
+import { ConfigurationError } from "@xmer/consumer-shared";
 
 export class Config {
 	readonly rabbitmqUrl: string;

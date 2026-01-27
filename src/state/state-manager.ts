@@ -1,4 +1,4 @@
-import type { ILogger } from "consumer-shared";
+import type { ILogger } from "@xmer/consumer-shared";
 import type { Redis } from "ioredis";
 import type {
 	IStateManager,
