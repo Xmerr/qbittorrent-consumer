@@ -22,8 +22,8 @@ FROM oven/bun:1 AS production
 WORKDIR /app
 
 # Create non-root user
-RUN addgroup --gid 1001 --system nodejs && \
-    adduser --system --uid 1001 nodejs
+RUN groupadd --gid 1001 --system nodejs && \
+    useradd --system --uid 1001 --gid nodejs nodejs
 
 # Copy package files and install production deps
 COPY package.json ./
