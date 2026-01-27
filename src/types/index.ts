@@ -107,7 +107,7 @@ export interface DownloadConsumerOptions {
 	exchange: string;
 	queue: string;
 	routingKey: string;
-	dlqHandler: import("consumer-shared").IDlqHandler;
+	dlqHandler: import("@xmer/consumer-shared").IDlqHandler;
 	logger: ILogger;
 	prefetchCount?: number;
 	qbittorrentClient: IQBittorrentClient;
@@ -121,5 +121,5 @@ export interface ProgressPublisherOptions {
 	qbittorrentClient: IQBittorrentClient;
 	stateManager: IStateManager;
 	intervalMs: number;
-	notificationsPublisher: import("consumer-shared").IPublisher;
+	notificationsPublisher: import("@xmer/consumer-shared").IPublisher;
 }

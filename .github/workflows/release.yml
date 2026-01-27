@@ -16,12 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Checkout consumer-shared
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/consumer-shared
-          path: consumer-shared
-
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
@@ -38,12 +32,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Checkout consumer-shared
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/consumer-shared
-          path: consumer-shared
 
       - name: Extract version from tag
         id: version

@@ -2,7 +2,7 @@
 
 RabbitMQ consumer service that manages qBittorrent downloads via the qBittorrent Web API. Listens for `downloads.add` messages to add torrents, polls for download progress, and publishes lifecycle events (`progress`, `complete`, `stalled`, `paused`, `removed`).
 
-Part of the [Consumers](../PRODUCT-CANVAS.md) event-driven microservices platform. Uses [`consumer-shared`](../consumer-shared/) for RabbitMQ infrastructure.
+Part of the [Consumers](../PRODUCT-CANVAS.md) event-driven microservices platform. Uses [`@xmer/consumer-shared`](https://www.npmjs.com/package/@xmer/consumer-shared) for RabbitMQ infrastructure.
 
 ## Setup
 
@@ -19,7 +19,6 @@ Part of the [Consumers](../PRODUCT-CANVAS.md) event-driven microservices platfor
 bun install
 ```
 
-> Requires `consumer-shared` as a sibling directory (`../consumer-shared`). Build it first with `cd ../consumer-shared && bun run build`.
 
 ### Configure
 
