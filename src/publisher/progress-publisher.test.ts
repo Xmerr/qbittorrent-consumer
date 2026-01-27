@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
+import type { ILogger, IPublisher } from "@xmer/consumer-shared";
 import type { Channel } from "amqplib";
-import type { ILogger, IPublisher } from "consumer-shared";
 import type {
 	IQBittorrentClient,
 	IStateManager,

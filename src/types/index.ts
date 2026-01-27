@@ -1,5 +1,5 @@
+import type { ILogger } from "@xmer/consumer-shared";
 import type { Channel } from "amqplib";
-import type { ILogger } from "consumer-shared";
 import type { Redis } from "ioredis";
 
 // ── Torrent categories ──

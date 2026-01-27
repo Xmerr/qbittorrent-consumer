@@ -13,7 +13,7 @@
 		"start": "bun run src/index.ts"
 	},
 	"dependencies": {
-		"consumer-shared": "file:../consumer-shared",
+		"@xmer/consumer-shared": "file:../consumer-shared",
 		"ioredis": "^5.4.2"
 	},
 	"devDependencies": {

@@ -3,7 +3,7 @@ import {
 	ConnectionManager,
 	DlqHandler,
 	createLogger,
-} from "consumer-shared";
+} from "@xmer/consumer-shared";
 import { Redis } from "ioredis";
 import { QBittorrentClient } from "./client/qbittorrent-client.js";
 import { Config } from "./config/config.js";

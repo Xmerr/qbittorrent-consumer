@@ -1,5 +1,5 @@
+import { BaseConsumer, NonRetryableError } from "@xmer/consumer-shared";
 import type { ConsumeMessage } from "amqplib";
-import { BaseConsumer, NonRetryableError } from "consumer-shared";
 import { VALID_CATEGORIES } from "../types/index.js";
 import type {
 	DownloadConsumerOptions,

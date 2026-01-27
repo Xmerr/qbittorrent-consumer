@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { ConfigurationError } from "consumer-shared";
+import { ConfigurationError } from "@xmer/consumer-shared";
 import { Config } from "./config.js";
 
 const validEnv: Record<string, string> = {
