@@ -1,0 +1,44 @@
+services:
+  qbittorrent-consumer:
+    build:
+      context: ..
+      dockerfile: qbittorrent-consumer/Dockerfile
+    container_name: qbittorrent-consumer
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      - RABBITMQ_URL=${RABBITMQ_URL}
+      - QUEUE_NAME=${QUEUE_NAME:-downloads.add}
+      - EXCHANGE_NAME=${EXCHANGE_NAME:-qbittorrent}
+      - PROGRESS_INTERVAL_MS=${PROGRESS_INTERVAL_MS:-30000}
+      - QBITTORRENT_URL=${QBITTORRENT_URL}
+      - QBITTORRENT_USERNAME=${QBITTORRENT_USERNAME}
+      - QBITTORRENT_PASSWORD=${QBITTORRENT_PASSWORD}
+      - REDIS_URL=redis://redis:6379
+      - LOKI_HOST=${LOKI_HOST:-}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    networks:
+      - network
+
+  redis:
+    image: redis:7-alpine
+    container_name: qbittorrent-consumer-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - redis-data:/data
+    networks:
+      - network
+
+volumes:
+  redis-data:
+
+networks:
+  network:
+    external: true
