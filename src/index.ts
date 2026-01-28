@@ -78,7 +78,10 @@ async function main(): Promise<void> {
 		stateManager,
 	});
 
+	await consumer.start();
+
 	// Assert exchange-to-exchange bindings for notifications
+	// Must run after consumer.start() which asserts the qbittorrent exchange
 	await channel.assertExchange("notifications", "topic", { durable: true });
 	await channel.bindExchange(
 		"notifications",
@@ -92,7 +95,6 @@ async function main(): Promise<void> {
 	);
 	logger.info("Exchange-to-exchange bindings asserted");
 
-	await consumer.start();
 	progressPublisher.startPolling();
 
 	logger.info("qbittorrent-consumer is running");
