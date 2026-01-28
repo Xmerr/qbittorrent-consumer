@@ -5,7 +5,7 @@
     "": {
       "name": "qbittorrent-consumer",
       "dependencies": {
-        "@xmer/consumer-shared": "^1.0.0",
+        "@xmer/consumer-shared": "^1.0.1",
         "ioredis": "^5.4.2",
       },
       "devDependencies": {
@@ -42,7 +42,7 @@
 
     "@types/node": ["@types/node@25.0.10", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-zWW5KPngR/yvakJgGOmZ5vTBemDoSqF3AcV/LrO5u5wTWyEAVVh+IT39G4gtyAkh3CtTZs8aX/yRM82OfzHJRg=="],
 
-    "@xmer/consumer-shared": ["@xmer/consumer-shared@1.0.0", "", { "dependencies": { "amqplib": "^0.10.9", "pino": "^10.2.1", "pino-loki": "^3.0.0" } }, "sha512-XefIBIUvyi5TaFmz+yKEmr7pYS1zT2SVdLt/kHIlwTUJ/0V77xV9zIddmSIH5YZIhi/k2uqH438LxbTXjDQFcQ=="],
+    "@xmer/consumer-shared": ["@xmer/consumer-shared@1.0.1", "", { "dependencies": { "amqplib": "^0.10.9", "pino": "^10.2.1", "pino-loki": "^3.0.0" } }, "sha512-/lXmRk4Cvtw6/faH4HfJcyuz7muK34AUde/aDHyME+ZUkZZ5RhyPZnNrjZ920C4+Oo2H0anMugWB878MjIhhVw=="],
 
     "amqplib": ["amqplib@0.10.9", "", { "dependencies": { "buffer-more-ints": "~1.0.0", "url-parse": "~1.5.10" } }, "sha512-jwSftI4QjS3mizvnSnOrPGYiUnm1vI2OP1iXeOUz5pb74Ua0nbf6nPyyTzuiCLEE3fMpaJORXh2K/TQ08H5xGA=="],
 

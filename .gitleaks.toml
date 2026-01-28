@@ -1,0 +1,12 @@
+[allowlist]
+description = "Project-specific allowlist — confirmed false positives"
+fingerprints = [
+  # .env.example — placeholder AMQP URL (username:password@host:port)
+  "61a78bde74b230328983270dc05e77254da394c8:.env.example:amqp-connection-string:2",
+  # src/config/config.ts — code reading env var, not a hardcoded secret
+  "61a78bde74b230328983270dc05e77254da394c8:src/config/config.ts:env-password-assignment:19",
+  # src/config/config.test.ts — fake connection strings in test fixtures
+  "61a78bde74b230328983270dc05e77254da394c8:src/config/config.test.ts:hardcoded-connection-string:6",
+  "61a78bde74b230328983270dc05e77254da394c8:src/config/config.test.ts:amqp-connection-string:6",
+  "61a78bde74b230328983270dc05e77254da394c8:src/config/config.test.ts:amqp-connection-string:19",
+]
