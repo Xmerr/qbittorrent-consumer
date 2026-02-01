@@ -123,7 +123,8 @@ jobs:
               "workflow": "${{ github.workflow }}",
               "status": "complete",
               "conclusion": "success",
-              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "dockerImage": true
             }'
 
       - name: Notify Release Failure
